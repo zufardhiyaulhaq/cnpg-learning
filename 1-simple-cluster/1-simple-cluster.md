@@ -2,15 +2,7 @@
 
 1. creating postgresql cluster
 ```
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: echo-postgresql
-  namespace: cnpg-system
-spec:
-  instances: 4
-  storage:
-    size: 1Gi
+kubectl apply -f cluster.yaml
 ```
 2. postgresql get cluster will show the master IP
 ```
@@ -53,6 +45,16 @@ data:
   username: YXBw
 ```
 6. by default, it's create database "app" and user "app" if it's not defined.
+7. create deployment
+```
+kubectl apply -f deployment.yaml
+kubectl get pod
+```
+8. port forward & test curl
+```
+kubectl port-forward svc/echo-postgresql 8080:8080
+while true; do curl http://localhost:8080/postgresql/test; sleep 0.5; done
+```
 
 
 https://cloudnative-pg.io/documentation/1.26/quickstart/
