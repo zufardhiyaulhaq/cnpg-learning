@@ -19,3 +19,13 @@ spec:
 3. always check the image is exist to prevent any distruption during activity (issue during activity is more hard to fix). https://github.com/cloudnative-pg/postgres-containers/pkgs/container/postgresql
 4. always plan which storageclass to choose and make sure it's support online volume resizing for easier increase of disk size
 5. always plan to which size during disk increase since reducing disk size is not possible.
+
+## Cheatsheet
+
+### Switchover master
+```
+kubectl get pod
+kubectl get clusters.postgresql.cnpg.io
+
+kubectl cnpg promote <cluster-name> <replica-pod-to-be-promoted>
+```
