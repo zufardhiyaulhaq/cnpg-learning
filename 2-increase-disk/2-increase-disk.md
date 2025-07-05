@@ -1,5 +1,11 @@
 # Increase Disk
 
+make sure your storageclass support supports online volume resizing
+```
+kubectl get storageclass -o jsonpath='{$.allowVolumeExpansion}' gtf-ack-essd-pl0-wait
+true
+```
+
 1. port forward service & test curl
 ```
 kubectl port-forward svc/echo-postgresql 8080:8080
@@ -34,3 +40,5 @@ Events:
   Normal   FileSystemResizeRequired    107s  external-resizer diskplugin.csi.alibabacloud.com  Require file system resize of volume on node
   Normal   FileSystemResizeSuccessful  102s  kubelet                                           MountVolume.NodeExpandVolume succeeded for volume "d-k1abj0np1naq984llm6a" ap-southeast-5.10.195.169.24
 ```
+
+https://cloudnative-pg.io/documentation/1.26/controller/#pvc-resizing
