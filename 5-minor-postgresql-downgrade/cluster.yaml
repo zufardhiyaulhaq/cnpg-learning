@@ -1,0 +1,17 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: echo-postgresql-upgrade-test
+  namespace: cnpg-system
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.0
+  instances: 2
+  storage:
+    size: 1Gi
+    storageClass: gtf-ack-essd-pl0-wait
+  ## supervised upgrade strategy ##
+  primaryUpdateStrategy: supervised
+  ## unsupervised upgrade strategy ##
+  # primaryUpdateStrategy: unsupervised
+  # primaryUpdateMethod: switchover
+
