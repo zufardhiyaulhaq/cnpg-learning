@@ -13,4 +13,9 @@ spec:
     storageClass: gtf-ack-essd-pl0-wait
   primaryUpdateStrategy: unsupervised
   primaryUpdateMethod: switchover
+  postgresql:
+    synchronous:
+      method: any
+      number: 1
+      dataDurability: required
     

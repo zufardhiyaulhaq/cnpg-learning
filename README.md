@@ -24,6 +24,10 @@ spec:
    2. Postgresql Upgrade
    3. Change StorageClass
    4. TBD
+7. Activity that not required master switchover/restart
+   1. modify synchronous replica
+   2. increase disk
+8. Replication slot are enable by default https://cloudnative-pg.io/documentation/1.26/replication/#replication-slots
 
 ## Cheatsheet
 
