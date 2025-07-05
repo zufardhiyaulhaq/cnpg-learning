@@ -38,3 +38,9 @@ kubectl get clusters.postgresql.cnpg.io
 
 kubectl cnpg promote <cluster-name> <replica-pod-to-be-promoted>
 ```
+
+### Check Synchronous Replica
+```
+app=> SHOW synchronous_commit;
+app=> SHOW synchronous_standby_names;
+```
