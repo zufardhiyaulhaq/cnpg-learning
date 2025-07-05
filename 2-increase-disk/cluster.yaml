@@ -1,0 +1,9 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: echo-postgresql
+  namespace: cnpg-system
+spec:
+  instances: 4
+  storage:
+    size: 2Gi

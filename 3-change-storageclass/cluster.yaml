@@ -1,0 +1,10 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: echo-postgresql
+  namespace: cnpg-system
+spec:
+  instances: 5
+  storage:
+    size: 20Gi
+    storageClass: gtf-ack-essd-pl1-wait
