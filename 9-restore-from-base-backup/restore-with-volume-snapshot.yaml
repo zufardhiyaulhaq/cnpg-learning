@@ -1,0 +1,31 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cluster-restore-with-volume-snapshot
+  namespace: cnpg-system
+spec:
+  bootstrap:
+    recovery:
+      volumeSnapshots:
+        storage:
+          name: echo-postgresql-on-demand-backup-02
+          kind: VolumeSnapshot
+          apiGroup: snapshot.storage.k8s.io
+        walStorage:
+          name: echo-postgresql-on-demand-backup-02-wal
+          kind: VolumeSnapshot
+          apiGroup: snapshot.storage.k8s.io
+  instances: 2
+  storage:
+    size: 20Gi
+    storageClass: gtf-ack-essd-pl0-wait
+  walStorage:
+    size: 1Gi
+    storageClass: gtf-ack-essd-pl0-wait
+  primaryUpdateStrategy: unsupervised
+  primaryUpdateMethod: switchover
+  postgresql:
+    synchronous:
+      method: any
+      number: 1
+      dataDurability: required
