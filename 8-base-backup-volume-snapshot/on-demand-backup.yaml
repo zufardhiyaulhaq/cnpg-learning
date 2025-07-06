@@ -2,6 +2,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Backup
 metadata:
   name: echo-postgresql-on-demand-backup-01
+  namespace: cnpg-system
 spec:
   method: volumeSnapshot
   cluster:

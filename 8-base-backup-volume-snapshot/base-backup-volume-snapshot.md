@@ -10,7 +10,6 @@ There are 2 storage location of base backup
 1. Kubernetes Volume Snapshots
 2. Object Store (via barman plugin)
 
-
 ## Create backup with Volume Snapshots
 1. make sure kubernetes support volume snapshot
 ```
@@ -53,9 +52,41 @@ NAME                                      READYTOUSE   SOURCEPVC                
 echo-postgresql-on-demand-backup-01       true         echo-postgresql-14                               20Gi          alibabacloud-disk-snapshot   snapcontent-23d0192c-1ad6-4f7f-a980-6ef10b405d9b   59s            59s
 echo-postgresql-on-demand-backup-01-wal   true         echo-postgresql-14-wal                           1Gi           alibabacloud-disk-snapshot   snapcontent-a1aa45d8-845d-48d5-8080-3b7899768b58   59s            59s
 ```
-6. Create Scheduled Backup
-TBD
 
+## Create Scheduled Backup with Volume Snapshot
+1. after configuring the backup configuration on cluster object. you can create the scheduled backup
+```
+kubectl apply -f scheduled-backup.yaml
+
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: echo-postgresql-daily-backup
+  namespace: cnpg-system
+spec:
+  immediate: true
+  schedule: "0 0 0 * * *"
+  method: volumeSnapshot
+  cluster:
+    name: echo-postgresql
+```
+this will run backup every night and run the first execution immediately.
+2. scheduled backup and backup will created, similar process of fencing the replica will happen
+```
+zufar.dhiyaullhaq@MacBookPro cnpg-learning % k get scheduledbackup
+NAME                           AGE   CLUSTER           LAST BACKUP
+echo-postgresql-daily-backup   66s   echo-postgresql   66s
+
+zufar.dhiyaullhaq@MacBookPro cnpg-learning % k get backup
+NAME                                          AGE   CLUSTER           METHOD           PHASE       ERROR
+echo-postgresql-daily-backup-20250706040410   59s   echo-postgresql   volumeSnapshot   completed   
+echo-postgresql-on-demand-backup-01           9h    echo-postgresql   volumeSnapshot   completed
+
+zufar.dhiyaullhaq@MacBookPro cnpg-learning % k get volumesnapshot                                           
+NAME                                              READYTOUSE   SOURCEPVC                SOURCESNAPSHOTCONTENT   RESTORESIZE   SNAPSHOTCLASS                SNAPSHOTCONTENT                                    CREATIONTIME   AGE
+echo-postgresql-daily-backup-20250706040410       true         echo-postgresql-14                               20Gi          alibabacloud-disk-snapshot   snapcontent-d343baa7-9157-4b9b-bd73-3b86383531d0   89s            89s
+echo-postgresql-daily-backup-20250706040410-wal   true         echo-postgresql-14-wal                           1Gi           alibabacloud-disk-snapshot   snapcontent-82fe6532-438c-4d7d-bc54-9c93b7ed72a5   89s            89s
+```
 
 https://cloudnative-pg.io/documentation/1.26/backup/
 https://cloudnative-pg.io/documentation/1.26/cloudnative-pg.v1/#postgresql-cnpg-io-v1-VolumeSnapshotConfiguration

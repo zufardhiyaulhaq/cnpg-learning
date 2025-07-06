@@ -1,0 +1,11 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: echo-postgresql-daily-backup
+  namespace: cnpg-system
+spec:
+  immediate: true
+  schedule: "0 0 0 * * *"
+  method: volumeSnapshot
+  cluster:
+    name: echo-postgresql
