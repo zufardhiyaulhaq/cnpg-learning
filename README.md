@@ -23,7 +23,8 @@ spec:
    1. adding WAL Storage
    2. Postgresql Upgrade
    3. Change StorageClass
-   4. TBD
+   4. Change resource request & limit spcification
+   5. TBD
 7. Activity that not required master switchover/restart
    1. modify synchronous replica
    2. increase disk
