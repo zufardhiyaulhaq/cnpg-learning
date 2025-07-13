@@ -1,6 +1,5 @@
 # Restore from Base Backup
 
-
 ## Create Backup & Records for validation
 1. create a record on database
 2. check if record is exist

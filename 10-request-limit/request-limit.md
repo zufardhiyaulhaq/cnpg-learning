@@ -1,6 +1,6 @@
 # Change Request limit of Postgresql
 
-1. apply the request limit
+1. apply the request limit, this will trigger master & replica pod to restarted.
 ```
 kubectl apply -f cluster.yaml
 
@@ -18,7 +18,7 @@ spec:
       cpu: 500m
       memory: 1Gi
 ```
-2. Replica will be restarted
+2. After applied, replica will be restarted automatically
 ```
 $ kubectl get cluster
 NAME                                   AGE    INSTANCES   READY   STATUS                                       PRIMARY
