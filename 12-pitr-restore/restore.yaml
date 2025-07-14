@@ -1,0 +1,50 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: echo-postgresql-restore-pitr
+  namespace: cnpg-system
+spec:
+  bootstrap:
+    recovery:
+      volumeSnapshots:
+        storage:
+          name: echo-postgresql-daily-backup-20250714000000
+          kind: VolumeSnapshot
+          apiGroup: snapshot.storage.k8s.io
+        walStorage:
+          name: echo-postgresql-daily-backup-20250714000000-wal
+          kind: VolumeSnapshot
+          apiGroup: snapshot.storage.k8s.io
+      source: pitr-object-storage
+  externalClusters:
+    - name: pitr-object-storage
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: s3-object-store-echo-postgresql
+          serverName: echo-postgresql
+  instances: 3
+  storage:
+    size: 20Gi
+    storageClass: gtf-ack-essd-pl0-wait
+  walStorage:
+    size: 1Gi
+    storageClass: gtf-ack-essd-pl0-wait
+  primaryUpdateStrategy: unsupervised
+  primaryUpdateMethod: switchover
+  postgresql:
+    parameters:
+      archive_timeout: "10min"
+    synchronous:
+      method: any
+      number: 1
+      dataDurability: required
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+        
+    

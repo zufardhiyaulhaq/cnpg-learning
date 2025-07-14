@@ -48,3 +48,5 @@ k logs echo-postgresql-14 -c plugin-barman-cloud -f --tail 10
 
 {"level":"info","ts":"2025-07-13T05:15:44.062401857Z","msg":"Skipping retention policy enforcement, not the current primary","logging_pod":"echo-postgresql-14","currentPrimary":"echo-postgresql-15","podName":"echo-postgresql-14"}
 ```
+
+https://cloudnative-pg.io/documentation/1.26/wal_archiving/

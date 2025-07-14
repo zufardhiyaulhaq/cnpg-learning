@@ -28,6 +28,7 @@ spec:
 7. Activity that not required master switchover/restart
    1. modify synchronous replica
    2. increase disk
+   3. set postgresql parameters archive_timeout
 8. Replication slot are enable by default https://cloudnative-pg.io/documentation/1.26/replication/#replication-slots
 
 ## Cheatsheet
@@ -44,4 +45,9 @@ kubectl cnpg promote <cluster-name> <replica-pod-to-be-promoted>
 ```
 app=> SHOW synchronous_commit;
 app=> SHOW synchronous_standby_names;
+```
+
+### Check Archival Timeout
+```
+app=> SHOW archive_timeout;
 ```
