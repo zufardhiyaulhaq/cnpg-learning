@@ -1,4 +1,4 @@
-# Point Time in Recovery Restoration
+# Point-in-time Recovery Restoration
 
 since we already have daily base backup with Kubernetes volume snapshot and WAL archival with object storage. we can restore Database with RPO (acceptable data loss) less than 5 minutes if we setup WAL archival less than 5 minutes.
 
