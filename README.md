@@ -41,6 +41,11 @@ kubectl get clusters.postgresql.cnpg.io
 kubectl cnpg promote <cluster-name> <replica-pod-to-be-promoted>
 ```
 
+### Execute command without port-forward
+```
+kubectl cnpg psql echo-postgresql -- -qAt -c 'SELECT version()'
+```
+
 ### Check Synchronous Replica
 ```
 app=> SHOW synchronous_commit;
