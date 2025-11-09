@@ -4,7 +4,7 @@ metadata:
   name: echo-postgresql
   namespace: cnpg-system
 spec:
-  instances: 3
+  instances: 4
   storage:
     size: 20Gi
     storageClass: gtf-ack-essd-pl0-wait

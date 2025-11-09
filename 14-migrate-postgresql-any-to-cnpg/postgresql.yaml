@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql-publisher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresql-publisher
+  template:
+    metadata:
+      labels:
+        app: postgresql-publisher
+    spec:
+      containers:
+      - name: postgresql
+        image: postgres:15
+        ports:
+        - containerPort: 5432
+        args: ["-c", "wal_level=logical"]
+        env:
+        - name: POSTGRES_DB
+          value: "echo"
+        - name: POSTGRES_USER
+          value: "echo_user"
+        - name: POSTGRES_PASSWORD
+          value: "echo_password"
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+          subPath: postgres-data
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgresql-publisher-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgresql-publisher-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql-publisher
+spec:
+  selector:
+    app: postgresql-publisher
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP
