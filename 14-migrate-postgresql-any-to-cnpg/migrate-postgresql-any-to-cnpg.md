@@ -60,6 +60,32 @@ echo=> SELECT * FROM pg_publication;
  16390 | all_tables_pub |       10 | t            | t         | t         | t         | t           | f
 (1 row)
 ```
+5. run the deployment to the postgresql in deployment to create the table
+```
+kubectl create -f deployment-before-migrate.yaml
+kubectl port-forward svc/deployment-migrate 8080:8080
+
+
+echo=> \dt
+         List of relations
+ Schema | Name  | Type  |   Owner
+--------+-------+-------+-----------
+ public | echos | table | echo_user
+(1 row)
+
+echo=> select * from echos;
+ created_at | updated_at | deleted_at | id | echo
+------------+------------+------------+----+------
+(0 rows)
+
+curl http://localhost:8080/postgresql/test
+58b152e8-8c96-4b3c-b9fb-194fdd3d7df4:test%
+
+echo=> select * from echos;
+          created_at           |          updated_at           | deleted_at |                  id                  | echo
+-------------------------------+-------------------------------+------------+--------------------------------------+------
+ 2025-11-09 08:59:58.212282+00 | 2025-11-09 08:59:58.210585+00 |            | 58b152e8-8c96-4b3c-b9fb-194fdd3d7df4 | test
+```
 
 ### Source
 https://www.gabrielebartolini.it/articles/2024/03/cloudnativepg-recipe-5-how-to-migrate-your-postgresql-database-in-kubernetes-with-~0-downtime-from-anywhere/

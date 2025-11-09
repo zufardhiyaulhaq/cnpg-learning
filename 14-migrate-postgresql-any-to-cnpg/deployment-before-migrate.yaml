@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-migrate
+  namespace: cnpg-system
+  labels:
+    app: deployment-migrate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployment-migrate
+  template:
+    metadata:
+      labels:
+        app: deployment-migrate
+    spec:
+      containers:
+      - name: deployment-migrate
+        image: ghcr.io/zufardhiyaulhaq/echo-postgresql:v1.0.1
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: HTTP_PORT
+          value: "8080"
+        - name: POSTGRESQL_HOST
+          value: "postgresql-publisher.cnpg-system.svc.cluster.local"
+        - name: POSTGRESQL_PORT
+          value: "5432"
+        - name: POSTGRESQL_DATABASE
+          value: "echo"
+        - name: POSTGRESQL_USER
+          value: "echo_user"
+        - name: POSTGRESQL_PASSWORD
+          value: "echo_password"
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deployment-migrate
+  namespace: cnpg-system
+spec:
+  selector:
+    app: deployment-migrate
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: http
+  type: ClusterIP
