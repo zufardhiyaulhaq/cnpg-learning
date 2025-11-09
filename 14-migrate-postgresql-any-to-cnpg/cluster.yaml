@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: postgresql-publisher-creds
+  name: cnpg-postgresql-publisher-creds
   namespace: cnpg-system
 data:
   password: cmVwbF9wYXNzd29yZA==
@@ -10,18 +10,18 @@ data:
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgresql-publisher
+  name: cnpg-postgresql-publisher
   namespace: cnpg-system
 spec:
   instances: 2
   externalClusters:
-  - name: postgresql-publisher
+  - name: legacy-postgresql-publisher
     connectionParameters:
       host: postgresql-publisher.cnpg-system.svc.cluster.local
       user: logical_repl
       dbname: echo
     password:
-      name: postgresql-publisher-creds
+      name: cnpg-postgresql-publisher-creds
       key: password
   bootstrap:
     initdb:
@@ -31,7 +31,7 @@ spec:
         databases:
           - echo
         source:
-          externalCluster: postgresql-publisher
+          externalCluster: legacy-postgresql-publisher
   storage:
     size: 10Gi
     storageClass: gtf-ack-essd-pl0-wait

@@ -1,12 +1,12 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Subscription
 metadata:
-  name: echo-postgresql-migrated-subscription
+  name: cnpg-postgresql-publisher
   namespace: cnpg-system
 spec:
   cluster:
-    name: echo-postgresql-migrated
-  dbname: echo
+    name: cnpg-postgresql-publisher
+  dbname: app
   name: subscriber
-  externalClusterName: postgresql-publisher
+  externalClusterName: legacy-postgresql-publisher
   publicationName: all_tables_pub
