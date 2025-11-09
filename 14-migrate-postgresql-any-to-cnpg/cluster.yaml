@@ -1,0 +1,68 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgresql-publisher-creds
+  namespace: cnpg-system
+data:
+  password: cmVwbF9wYXNzd29yZA==
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgresql-publisher
+  namespace: cnpg-system
+spec:
+  instances: 2
+  externalClusters:
+  - name: postgresql-publisher
+    connectionParameters:
+      host: postgresql-publisher.cnpg-system.svc.cluster.local
+      user: logical_repl
+      dbname: echo
+    password:
+      name: postgresql-publisher-creds
+      key: password
+  bootstrap:
+    initdb:
+      import:
+        type: microservice
+        schemaOnly: true
+        databases:
+          - echo
+        source:
+          externalCluster: postgresql-publisher
+  storage:
+    size: 10Gi
+    storageClass: gtf-ack-essd-pl0-wait
+  walStorage:
+    size: 1Gi
+    storageClass: gtf-ack-essd-pl0-wait
+  primaryUpdateStrategy: unsupervised
+  primaryUpdateMethod: switchover
+  postgresql:
+    parameters:
+      archive_timeout: "10min"
+    synchronous:
+      method: any
+      number: 1
+      dataDurability: required
+  backup:
+    target: prefer-standby
+    volumeSnapshot:
+      className: alibabacloud-disk-snapshot
+      online: false
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: s3-object-store-echo-postgresql
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+        
+    

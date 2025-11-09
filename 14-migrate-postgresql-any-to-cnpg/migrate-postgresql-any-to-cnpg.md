@@ -87,6 +87,12 @@ echo=> select * from echos;
  2025-11-09 08:59:58.212282+00 | 2025-11-09 08:59:58.210585+00 |            | 58b152e8-8c96-4b3c-b9fb-194fdd3d7df4 | test
 ```
 
+### Create the Database with CNPG
+1. create the manifests
+```
+kubectl apply -f cluster.yaml
+```
+
 ### Source
 https://www.gabrielebartolini.it/articles/2024/03/cloudnativepg-recipe-5-how-to-migrate-your-postgresql-database-in-kubernetes-with-~0-downtime-from-anywhere/
 https://cloudnative-pg.io/documentation/1.26/bootstrap/#bootstrap-from-another-cluster
