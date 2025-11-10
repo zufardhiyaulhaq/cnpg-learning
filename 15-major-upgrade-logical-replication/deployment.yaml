@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-postgresql-upgrade
+  namespace: cnpg-system
+  labels:
+    app: echo-postgresql-upgrade
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo-postgresql-upgrade
+  template:
+    metadata:
+      labels:
+        app: echo-postgresql-upgrade
+    spec:
+      containers:
+      - name: echo-postgresql-upgrade
+        image: ghcr.io/zufardhiyaulhaq/echo-postgresql:v1.0.0
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: HTTP_PORT
+          value: "8080"
+        - name: POSTGRESQL_HOST
+          value: "echo-postgresql-16-9-rw.cnpg-system.svc.cluster.local"
+        - name: POSTGRESQL_PORT
+          value: "5432"
+        - name: POSTGRESQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: echo-postgresql-16-9-app
+              key: dbname
+        - name: POSTGRESQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: echo-postgresql-16-9-app
+              key: user
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: echo-postgresql-16-9-app
+              key: password
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-postgresql-upgrade
+  namespace: cnpg-system
+spec:
+  selector:
+    app: echo-postgresql-upgrade
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: http
+  type: ClusterIP

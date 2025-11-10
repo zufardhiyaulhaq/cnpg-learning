@@ -1,0 +1,12 @@
+
+apiVersion: postgresql.cnpg.io/v1
+kind: Publication
+metadata:
+  name: echo-postgresql-16-9-publisher
+spec:
+  cluster:
+    name: echo-postgresql-16-9
+  dbname: app
+  name: echo-postgresql-16-9-publisher
+  target:
+    allTables: true

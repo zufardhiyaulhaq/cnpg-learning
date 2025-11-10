@@ -1,0 +1,13 @@
+
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Subscription
+metadata:
+  name: echo-postgresql-18-0-subscription
+spec:
+  cluster:
+    name: echo-postgresql-18-0
+  dbname: app
+  name: echo-postgresql-18-0-subscriber
+  externalClusterName: echo-postgresql-16-9
+  publicationName: echo-postgresql-16-9-publisher

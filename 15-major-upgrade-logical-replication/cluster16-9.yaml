@@ -1,16 +1,32 @@
-
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: echo-postgresql-16-9-logical-replication-creds
+  namespace: cnpg-system
+data:
+  username: cmVwbF91c2VybmFtZQ==
+  password: cmVwbF9wYXNzd29yZA==
+type: kubernetes.io/basic-auth
+---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: echo-postgresql-major-upgrade
+  name: echo-postgresql-16-9
   namespace: cnpg-system
 spec:
-  # imageName: ghcr.io/cloudnative-pg/postgresql:16.9
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.5
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.9
   instances: 2
   storage:
     size: 1Gi
     storageClass: gtf-ack-essd-pl0-wait
+  managed:
+    roles:
+      - name: logical_replication
+        login: true
+        replication: true
+        passwordSecret:
+          name: echo-postgresql-16-9-logical-replication-creds
   walStorage:
     size: 1Gi
     storageClass: gtf-ack-essd-pl0-wait
