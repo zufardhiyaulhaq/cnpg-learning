@@ -29,6 +29,7 @@ spec:
    1. modify synchronous replica
    2. increase disk
    3. set postgresql parameters archive_timeout
+   4. adding subscriber
 8. Replication slot are enable by default https://cloudnative-pg.io/documentation/1.26/replication/#replication-slots
 9. After major upgrade, the existing base backup & WAL archive is only available for old the previous postgresql version.
 10. Always install kubectl cpng plugin, it's really helpful for troubleshooting https://cloudnative-pg.io/documentation/1.26/kubectl-plugin/
