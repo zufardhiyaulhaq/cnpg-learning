@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: echo-postgresql-upgrade
-        image: ghcr.io/zufardhiyaulhaq/echo-postgresql:v1.0.0
+        image: ghcr.io/zufardhiyaulhaq/echo-postgresql:v1.0.1
         ports:
         - containerPort: 8080
           name: http
@@ -25,23 +25,23 @@ spec:
         - name: HTTP_PORT
           value: "8080"
         - name: POSTGRESQL_HOST
-          value: "echo-postgresql-16-9-rw.cnpg-system.svc.cluster.local"
+          value: "echo-postgresql-18-0-rw.cnpg-system.svc.cluster.local"
         - name: POSTGRESQL_PORT
           value: "5432"
         - name: POSTGRESQL_DATABASE
           valueFrom:
             secretKeyRef:
-              name: echo-postgresql-16-9-app
+              name: echo-postgresql-18-0-app
               key: dbname
         - name: POSTGRESQL_USER
           valueFrom:
             secretKeyRef:
-              name: echo-postgresql-16-9-app
+              name: echo-postgresql-18-0-app
               key: user
         - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: echo-postgresql-16-9-app
+              name: echo-postgresql-18-0-app
               key: password
         resources:
           requests:

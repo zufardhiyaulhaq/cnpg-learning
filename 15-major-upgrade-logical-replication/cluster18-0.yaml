@@ -11,7 +11,7 @@ spec:
   - name: echo-postgresql-16-9
     connectionParameters:
       host: echo-postgresql-16-9-rw.cnpg-system.svc.cluster.local
-      user: repl_username
+      user: logical_replication
       dbname: app
     password:
       name: echo-postgresql-16-9-logical-replication-creds

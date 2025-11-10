@@ -4,9 +4,11 @@ kind: Secret
 metadata:
   name: echo-postgresql-16-9-logical-replication-creds
   namespace: cnpg-system
+  labels:
+    cnpg.io/reload: "true"
 data:
-  username: cmVwbF91c2VybmFtZQ==
-  password: cmVwbF9wYXNzd29yZA==
+  username: bG9naWNhbF9yZXBsaWNhdGlvbg==
+  password: bG9naWNhbF9yZXBsaWNhdGlvbg==
 type: kubernetes.io/basic-auth
 ---
 apiVersion: postgresql.cnpg.io/v1
@@ -25,8 +27,11 @@ spec:
       - name: logical_replication
         login: true
         replication: true
+        ensure: present
         passwordSecret:
           name: echo-postgresql-16-9-logical-replication-creds
+        inRoles:
+          - app
   walStorage:
     size: 1Gi
     storageClass: gtf-ack-essd-pl0-wait

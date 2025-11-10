@@ -35,6 +35,7 @@ spec:
 8. Replication slot are enable by default https://cloudnative-pg.io/documentation/1.26/replication/#replication-slots
 9. After major upgrade, the existing base backup & WAL archive is only available for old the previous postgresql version.
 10. Always install kubectl cpng plugin, it's really helpful for troubleshooting https://cloudnative-pg.io/documentation/1.26/kubectl-plugin/
+11. when creating a new role in CNPG, make sure to align the role name on .spec.managed.roles[x].name with the basic-auth secret on key username. if you use different username, it will not work and not returning any error.
 
 ## Cheatsheet
 
