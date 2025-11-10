@@ -69,6 +69,19 @@ kubectl cnpg psql echo-postgresql -- -qAt -c 'SELECT * FROM pg_replication_slots
 kubectl cnpg psql echo-postgresql -- -qAt -c 'SELECT slot_name, active, restart_lsn FROM pg_replication_slots'
 ```
 
+### Check Publisher configuration
+```
+ app=> SELECT pubname, puballtables, pubinsert, pubupdate, pubdelete, pubtruncate, pubviaroot                                                                        FROM pg_publication;
+            pubname             | puballtables | pubinsert | pubupdate | pubdelete | pubtruncate | pubviaroot 
+--------------------------------+--------------+-----------+-----------+-----------+-------------+------------
+ echo-postgresql-16-9-publisher | t            | t         | t         | t         | t           | f
+```
+
+### Check roles with replication permission
+```
+ app=> SELECT rolname FROM pg_roles WHERE rolreplication = true;
+```
+
 ### Check overall status of postgresql cluster
 ```
 kubectl cnpg status echo-postgresql
