@@ -8,11 +8,11 @@ spec:
     recovery:
       volumeSnapshots:
         storage:
-          name: echo-postgresql-daily-backup-20250714000000
+          name: echo-postgresql-on-demand-backup-01
           kind: VolumeSnapshot
           apiGroup: snapshot.storage.k8s.io
         walStorage:
-          name: echo-postgresql-daily-backup-20250714000000-wal
+          name: echo-postgresql-on-demand-backup-01-wal
           kind: VolumeSnapshot
           apiGroup: snapshot.storage.k8s.io
       source: pitr-object-storage
@@ -21,7 +21,7 @@ spec:
       plugin:
         name: barman-cloud.cloudnative-pg.io
         parameters:
-          barmanObjectName: s3-object-store-echo-postgresql
+          barmanObjectName: s3-object-store-wal-archival
           serverName: echo-postgresql
   instances: 3
   storage:

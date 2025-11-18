@@ -53,7 +53,7 @@ spec:
   - name: barman-cloud.cloudnative-pg.io
     isWALArchiver: true
     parameters:
-      barmanObjectName: s3-object-store-echo-postgresql
+      barmanObjectName: s3-object-store-wal-archival
   resources:
     requests:
       cpu: 100m

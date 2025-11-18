@@ -1,7 +1,7 @@
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
-  name: s3-object-store-echo-postgresql
+  name: s3-object-store-wal-archival
   namespace: cnpg-system
 spec:
   configuration:

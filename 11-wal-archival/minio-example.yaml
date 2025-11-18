@@ -18,9 +18,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: minio
+  name: minio-pvc
   labels:
-    app: minio
+    app: minio-pvc
 spec:
   accessModes:
     - ReadWriteOnce

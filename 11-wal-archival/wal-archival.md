@@ -9,6 +9,12 @@ kubectl apply -f minio.yaml
 
 kubectl port-forward svc/minio 9001:9001
 http://127.0.0.1:9001/
+
+k exec -it minio-77f9768885-9hljn -- bash
+mc alias set myminio http://127.0.0.1:9000/ minioadmin minioadmin
+mc mb myminio/wal-archival
+
+mc admin accesskey create localminio/ --access-key miniouser --secret-key miniouser
 ```
 3. Create object store & required secret
 ```
@@ -24,7 +30,7 @@ spec:
   - name: barman-cloud.cloudnative-pg.io
     isWALArchiver: true
     parameters:
-      barmanObjectName: s3-object-store-echo-postgresql
+      barmanObjectName: s3-object-store-wal-archival
 ```
 4. Cluster will start the process of installing the plugin with sidecar, required master and replica restart
 ```
