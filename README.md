@@ -172,3 +172,7 @@ just force delete the old pod
 ```
 k delete pod echo-postgresql-major-upgrade-1 --force
 ```
+
+### Open Questions
+1. it's possible to separate replica with master storage size
+2. it's possible to downgrade the disk
