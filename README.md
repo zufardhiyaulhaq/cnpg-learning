@@ -37,6 +37,12 @@ spec:
 9. After major upgrade, the existing base backup & WAL archive is only available for old the previous postgresql version.
 10. Always install kubectl cpng plugin, it's really helpful for troubleshooting https://cloudnative-pg.io/documentation/1.26/kubectl-plugin/
 11. when creating a new role in CNPG, make sure to align the role name on .spec.managed.roles[x].name with the basic-auth secret on key username. if you use different username, it will not work and not returning any error.
+12. always test upgrading operator in test cluster and observe the behaviour. there is some bugs where ENABLE_INSTANCE_MANAGER_INPLACE_UPDATES is set to true but still rollout restart the cluster
+13. always set primaryUpdateStrategy to supervised for all CNPG cluster before upgrading operator, preventing current master to switchover or restarted if something weird happen.
+```
+spec:
+  primaryUpdateStrategy: supervised
+```
 
 ## Cheatsheet
 

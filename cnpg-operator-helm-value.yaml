@@ -1,0 +1,17 @@
+replicaCount: 3
+
+image:
+  repository: ghcr.io/cloudnative-pg/cloudnative-pg
+  pullPolicy: IfNotPresent
+
+crds:
+  create: true
+
+monitoring:
+  podMonitorEnabled: true
+
+config:
+  data: 
+    ENABLE_INSTANCE_MANAGER_INPLACE_UPDATES: 'true'
+    CLUSTERS_ROLLOUT_DELAY: '60'
+    INSTANCES_ROLLOUT_DELAY: '10'
