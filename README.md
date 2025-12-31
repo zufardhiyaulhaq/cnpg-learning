@@ -76,6 +76,11 @@ kubectl cnpg psql echo-postgresql -- -qAt -c 'SELECT * FROM pg_replication_slots
 kubectl cnpg psql echo-postgresql -- -qAt -c 'SELECT slot_name, active, restart_lsn FROM pg_replication_slots'
 ```
 
+### Check pg_hba.conf
+```
+kubectl cnpg psql echo-postgresql -- -qAt -c 'SELECT * FROM pg_hba_file_rules;'
+```
+
 ### Check Publisher configuration
 ```
  app=> SELECT pubname, puballtables, pubinsert, pubupdate, pubdelete, pubtruncate, pubviaroot                                                                        FROM pg_publication;
